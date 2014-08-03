@@ -31,7 +31,7 @@ var app = express();
 /* ========================================================== 
 Set the Port
 ============================================================ */
-app.set('port', process.env.PORT || 8800);
+app.set('port', process.env.PORT || 3080);
 
 /* ========================================================== 
 Serve the static index.html from the public folder
