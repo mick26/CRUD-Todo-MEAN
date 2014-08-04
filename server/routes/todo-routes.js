@@ -1,6 +1,9 @@
 /*================================================================
-	Server side Routing using Express / Mongoose / MongoDB
+	Server side Routing
+	Route Definitions
+
 =================================================================*/
+
 
 //Get the Mongoose Model
 var TodoModel = require('../models/mongSchemaModel');

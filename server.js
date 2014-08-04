@@ -1,6 +1,6 @@
 /*=========================================================
 Michael Cullen
-Todo CRUD - Express 4 / Mongoose / Angular
+Todo CRUD - Express / Mongoose / Angular
 server.js
 
 2014
@@ -43,8 +43,10 @@ app.use(express.static(__dirname + '/public'));
 Use Middleware
 ============================================================ */
 app.use(logger('dev')); 	//log every request in dev mode only to the console
-app.use(bodyParser()); 		//Get info from $HTTP POST/PUT packets - needed for req.body
-							//bodyParser includes JSON & Urlencoded
+
+// parse application/json
+app.use(bodyParser.json()) //Get info from $HTTP POST/PUT packets - needed for req.body
+							
 
 /* ========================================================== 
 ROUTES - using Express

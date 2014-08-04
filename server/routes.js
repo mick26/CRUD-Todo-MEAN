@@ -1,6 +1,9 @@
 /*================================================================
-Server side Routing - Route Definitions
+	Server side Routing
+	Route Declarations
+
 =================================================================*/
+
 
 /* ========================================================== 
 Internal App Modules/Packages Required
