@@ -45,7 +45,7 @@ Use Middleware
 app.use(logger('dev')); 	//log every request in dev mode only to the console
 
 // parse application/json
-app.use(bodyParser.json()) //Get info from $HTTP POST/PUT packets - needed for req.body
+app.use(bodyParser.json()); //Get info from $HTTP POST/PUT packets - needed for req.body
 							
 
 /* ========================================================== 
