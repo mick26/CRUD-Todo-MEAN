@@ -3,5 +3,5 @@
 module.exports = {
 
 	//Local MongoDB
-	url : 'mongodb://localhost'	
+	url : 'mongodb://localhost/todos'	
 }

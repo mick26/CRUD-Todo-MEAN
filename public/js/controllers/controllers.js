@@ -1,105 +1,67 @@
-/**
- * Module - for the Controllers
- */
+'use strict';
 
+/* ============================================================================
+Module - for the Controllers
+============================================================================ */
 angular.module('mongoDbApp.controllers', [])
-
 
 /**
  * Controller - MainCtrl
  */
-.controller('MainCtrl', function($scope, $http) {
+.controller('MainCtrl', function($scope, $http, $q, getTodosService,
+    createTodoService, updateTodoService, deleteTodoService, $log) {
 
-	$scope.formData = {};
+    var main =this;
+    main.formData = {};
 
-	/*================================================================
-		READ - $http get
-	=================================================================*/
-	// when landing on the page, get all todos and show them
-	$http.get('/api/todos')
+    /**
+     * Get Todos
+     */
+    getTodosService.getTodos()
+    .then(function(answer) {
+        main.todos = answer;
+    },
+    function(error) {
+        console.log("OOPS!!!! " + JSON.stringify(error));
+    });
 
-		//success - callback fn
-		.success(function(data, status, headers, config) {
-			$scope.todos = data;
-			console.info("Status: " + status);
-			console.info("Config: " + JSON.stringify(config));
-		})
+    /*
+     * Create a New Todo
+     */
+    main.createTodo = function() {
+        createTodoService.createTodo(main.formData)
+        .then(function(answer) {
+            main.todos = answer;
+        },
+        function(error) {
+        	console.log("Error Creating Todo!!!! " + JSON.stringify(error));
+        });
+    };
 
-		//error - callback fn
-		.error(function(data, status, headers, config) {
-			console.log('Error: ' + data);
-		});
+    /*
+     * Update a Todo
+     */
+    main.editTodo = function(id, txt, isDone) {
+    	var updateData = {"text":txt, "done": isDone};
+    	updateTodoService.updateTodo(id, updateData)
+    	.then(function(answer) {
+    		main.todos = answer;
+    	},
+    	function(error) {
+    		console.log("OOPS Error Updating!!!! " + JSON.stringify(error));
+    	});
+    };
 
-
-	/*================================================================
-		CREATE - $http post
-	=================================================================*/
-	$scope.createTodo = function() 
-	{
-		console.info("CreateTodo formData: " + JSON.stringify($scope.formData));//TEST
-
-		$http.post('/api/todos', $scope.formData)
-
-			//success
-			.success(function(data, status, headers, config) {
-				$scope.todos = data;
-				console.info("Status: " + status);
-				console.info("Config: " + JSON.stringify(config));
-			})
-
-			//error
-			.error(function(data) {
-				console.log('Error: ' + data);
-			});
-	};
-
-
-	/*================================================================
-		UPDATE - $http put
-	=================================================================*/
-	$scope.editTodo = function (id, txt, isDone) {
-
-		/*	 
-		console.info("in controller.js editTodo");	//TEST
-		console.info("ID: " + id);					//TEST
-		console.info("text: " + txt);				//TEST
-		console.info("isDone: " + isDone);			//TEST
-		*/
-		var editData = {"text":txt, "done": isDone};
-
-		$http.put('/api/todos/' + id, editData)
-
-		//success
-		.success(function(data, status, headers, config) {
-			$scope.todos = data;
-			console.info("Put Status: " + status);
-			console.info("Config: " + JSON.stringify(config));
-		})
-
-		//error
-		.error(function(data) {
-			console.log('Error Updating: ' + data);
-		});
-	};
-
-
-	/*================================================================
-		DELETE - $http delete
-	=================================================================*/
-	$scope.deleteTodo = function(id) 
-	{
-		$http.delete('/api/todos/' + id)
-
-			//success
-			.success(function(data, status, headers, config) {
-				$scope.todos = data;
-				console.info("Status: " + status);
-				console.info("Config: " + JSON.stringify(config));
-			})
-
-			//error
-			.error(function(data) {
-				console.log('Error deleting: ' + data);
-			});
-	};
-})
+    /**
+     * Delete a Todo
+     */
+    main.deleteTodo = function(id) {
+        deleteTodoService.deleteTodo(id)
+        .then(function(answer) {
+            main.todos = answer;
+        },
+        function(error) {
+            console.log("OOPS Error Deleting!!!! " + JSON.stringify(error));
+        });
+    };
+});
