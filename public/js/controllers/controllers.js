@@ -8,7 +8,7 @@ angular.module('mongoDbApp.controllers', [])
 /**
  * Controller - MainCtrl
  */
-.controller('MainCtrl', function($scope, $http, $q, getTodosService,
+.controller('MainCtrl', function($http, $q, getTodosService,
     createTodoService, updateTodoService, deleteTodoService, $log) {
 
     var main =this;
